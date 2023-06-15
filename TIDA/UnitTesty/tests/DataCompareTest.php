@@ -1,57 +1,40 @@
 <?php
 
-require_once 'LibCss.php';
+require_once 'DataCompare.php';
 
 use PHPUnit\Framework\TestCase;
 
 class DataCompareTest extends TestCase
 {
-    public function SetUp(): void
+    public function test1()
     {
-        $this->libCss = new LibCss();
+        $this->dataCompare = new DataCompare(true);
+
+        $expected = array(
+            'a'=>123,
+            'b'=>'str',
+            'c'=>false
+        );
+        $result = $this->dataCompare->readDataFromFile('data1.csv');
+        $this->assertTrue($result);
+        $this->assertEquals($expected, $this->dataCompare->data);
     }
 
-    public function testJs1()
-    {
-        $expected = '<script src="nieistnieje-skrypt.js"></script>';
-        $result = $this->libCss->loadLib('nieistnieje-skrypt.js', 'script', '');
-        $this->assertEquals($expected, $result);
+    public function test2(){
+        $this->dataCompare = new DataCompare(false);
+
+        $expected = "'d','e','f'\n456,'chr','true'";
+        $result = $this->dataCompare->readDataFromFile('data2.csv');
+        $this->assertTrue($result);
+        $this->assertEquals($expected, $this->dataCompare->data);
     }
 
-    public function testJs2()
-    {
-        $expected = '<script src="skrypt.js"></script>';
-        $result = $this->libCss->loadLib('skrypt.js', 'script', '');
-        $this->assertEquals($expected, $result);
+    public function test3(){
+        $this->dataCompare = new DataCompare(false);
+
+        $expected = "789,'xyz','true'";
+        $result = $this->dataCompare->readDataFromFile('data3.php');
+        $this->assertTrue($result);
+        $this->assertEquals($expected, $this->dataCompare->data);
     }
-
-    public function testJs3()
-    {
-        $expected = '<script src="skrypt.js?v=123"></script>';
-        $result = $this->libCss->loadLib('skrypt.js', 'script', '123');
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testCss1()
-    {
-        $expected = '<link rel="stylesheet" href="nieistnieje-arkusz.css" />';
-        $result = $this->libCss->loadLib('nieistnieje-arkusz.css', 'css', '');
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testCss2()
-    {
-        $expected = '<link rel="stylesheet" href="arkusz.css" />';
-        $result = $this->libCss->loadLib('arkusz.css', 'css', '');
-        $this->assertEquals($expected, $result);
-    }
-
-    public function testCss3()
-    {
-        $expected = '<link rel="stylesheet" href="arkusz.css?v=123" />';
-        $result = $this->libCss->loadLib('arkusz.css', 'css', '123');
-        $this->assertEquals($expected, $result);
-    }
-
-
 }

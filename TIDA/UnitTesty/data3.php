@@ -1,1 +1,1 @@
-$data = „789,’xyz’,’true’„
+789,xyz,true

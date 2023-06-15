@@ -1,5 +1,2 @@
-$data = array(
-‘a’=>123,
-‘b’=>’str’,
-‘c’=>false,
-);
+a,b,c
+123,str,false
